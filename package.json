@@ -1,0 +1,30 @@
+{
+  "name": "discord-modbot",
+  "version": "1.0.0",
+  "description": "Discord Auto-Moderation Bot using Google Perspective API",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node start.js",
+    "bot": "node bot.js",
+    "dev": "nodemon bot.js",
+    "setup": "node start.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "moderation",
+    "perspective-api",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
