@@ -1,9 +1,15 @@
-# 🤖 Discord ModBot - Auto-Moderação com IA
+# 🤖 ModBot - Sistema Completo de Moderação com IA
 
-Um bot Discord de auto-moderação que utiliza a Google Perspective API para detectar e remover conteúdo tóxico automaticamente.
+Um sistema completo de moderação automática que inclui:
+- **Discord Bot** para moderação automática de servidores
+- **API REST** para integração com qualquer aplicação
+- **Exemplos práticos** de integração
+
+Utiliza a Google Perspective API para detectar e moderar conteúdo tóxico em tempo real.
 
 ## 🚀 Funcionalidades
 
+### Discord Bot
 - **Detecção automática de toxicidade** usando Google Perspective API
 - **Deleção automática** de mensagens tóxicas
 - **Sistema de avisos** para usuários infratores
@@ -13,12 +19,20 @@ Um bot Discord de auto-moderação que utiliza a Google Perspective API para det
 - **Logs detalhados** de todas as ações
 - **Mensagens privadas** para usuários punidos
 
+### API REST
+- **Moderação de texto** via endpoints REST
+- **Análise em lote** para grandes volumes
+- **Rate limiting** para controle de uso
+- **Autenticação via API key**
+- **Integração fácil** com qualquer aplicação
+- **Exemplos completos** de uso
+
 ## 📋 Pré-requisitos
 
 - Node.js (versão 16 ou superior)
-- Conta Discord Developer
 - Google Perspective API Key
-- Bot Discord configurado
+- **Para Discord Bot:** Conta Discord Developer
+- **Para API:** Servidor web (opcional)
 
 ## 🛠️ Instalação
 
@@ -30,29 +44,105 @@ npm install
 
 3. Configure o arquivo `.env` com suas credenciais:
 ```env
+# Obrigatório - Google Perspective API
 PERSPECTIVE_API_KEY=sua_api_key_aqui
+
+# Para Discord Bot
 DISCORD_TOKEN=seu_token_do_bot_aqui
 OWNER_ID=seu_id_do_discord
 MONITORED_CHANNELS=id_canal_1,id_canal_2
+
+# Para API REST
+API_PORT=3000
+API_SECRET_KEY=sua-chave-secreta-aqui
+
+# Configurações de moderação
 TOXICITY_THRESHOLD=0.7
 SEVERE_TOXICITY_THRESHOLD=0.8
 MUTE_DURATION=600000
 MAX_WARNINGS=3
 ```
 
-4. Inicie o bot:
+## 🎮 Como Usar
+
+### Discord Bot
 ```bash
-npm start
+npm start        # Inicia o bot Discord
+npm run bot      # Inicia apenas o bot (sem verificações)
 ```
+
+### API REST
+```bash
+npm run api      # Inicia apenas a API
+npm run dev-api  # Inicia API em modo desenvolvimento
+```
+
+### Ambos Simultaneamente
+Execute em terminais separados:
+```bash
+# Terminal 1 - Discord Bot
+npm start
+
+# Terminal 2 - API REST
+npm run api
+```
+
+## 📡 API REST - Integração com Aplicações
+
+A ModBot API permite integrar moderação de IA em qualquer aplicação via HTTP REST.
+
+### Endpoints Principais
+
+```http
+POST /moderate          # Moderação básica
+POST /analyze           # Análise detalhada  
+POST /batch            # Análise em lote (requer API key)
+GET  /stats            # Estatísticas (requer API key)
+GET  /health           # Status da API
+```
+
+### Exemplo de Uso
+
+```javascript
+// Moderar um texto
+const response = await fetch('http://localhost:3000/moderate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        text: "Texto para analisar",
+        thresholds: { toxicity: 0.7 }
+    })
+});
+
+const result = await response.json();
+console.log(result.data.isToxic); // true/false
+```
+
+### Exemplos Práticos
+
+- **`examples/web-example.js`** - Interface web para testar a API
+- **`examples/comment-system.js`** - Sistema de comentários moderado
+- **`examples/chat-example.js`** - Chat em tempo real com moderação
+
+Para mais detalhes, consulte: **[ModApi/README.md](ModApi/README.md)**
 
 ## ⚙️ Configurações
 
 ### Variáveis do .env
 
+**Obrigatório:**
 - `PERSPECTIVE_API_KEY`: Sua chave da Google Perspective API
+
+**Discord Bot:**
 - `DISCORD_TOKEN`: Token do seu bot Discord
 - `OWNER_ID`: Seu ID no Discord (para comandos administrativos)
 - `MONITORED_CHANNELS`: IDs dos canais a serem monitorados (separados por vírgula)
+
+**API REST:**
+- `API_PORT`: Porta da API (padrão: 3000)
+- `API_SECRET_KEY`: Chave secreta para endpoints protegidos
+
+**Moderação:**
 - `TOXICITY_THRESHOLD`: Limite de toxicidade (0.0 a 1.0, padrão: 0.7)
 - `SEVERE_TOXICITY_THRESHOLD`: Limite de toxicidade severa (padrão: 0.8)
 - `MUTE_DURATION`: Duração do mute em milissegundos (padrão: 600000 = 10 minutos)
